@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:property-placeholder location="sport.properties"/>
+
+    <bean id="myFortuneService" class="basicDependency.Fortune.HappyFortuneService">
+    </bean>
+
+    <bean id="myCoach" class="basicDependency.coach.BaseballCoach">
+        <constructor-arg ref="myFortuneService"/>
+    </bean>
+    <bean  id="trackCoach" class="basicDependency.coach.TrackCoach">
+        <constructor-arg ref="myFortuneService"/>
+    </bean>
+
+    <bean id="myCricketCoach" class="basicDependency.coach.CricketCoach">
+        <!--set ups setter-->
+        <property name="fortuneService" ref="myFortuneService"/>
+        <property name="email" value="${email}"/>
+        <property name="team" value="${team}"/>
+    </bean>
+
+    <bean id="springClass1" class="basicDependency.coach.SpringTestClass1">
+        <constructor-arg index="0" ref="myMap"/>
+    </bean>
+    <bean id="springClass2" class="basicDependency.coach.SpringTestClass2">
+        <constructor-arg index="0" ref="myMap"/>
+    </bean>
+
+    <util:map id="myMap" scope="singleton">
+        <!--<entry key="1" value="one1"/>-->
+    </util:map>
+</beans>
